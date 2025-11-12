@@ -7,10 +7,8 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
-
+  build-linux:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: set up zmq
@@ -19,9 +17,21 @@ jobs:
       run: make all
     - uses: actions/upload-artifact@v4
       with:
+        name: universal-builds-linux
         path: |
           universal-pubsub
           universal-sub-pubsub
           universal-xpubxsub
           universal-sub-xpubxsub
           universal-sub-xpubxsub-timeout
+    - name: Create Release
+      uses: comnoco/create-release@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: |
+          Automatic buld
+        draft: false
+        prerelease: false
