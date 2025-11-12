@@ -31,9 +31,12 @@ jobs:
     - name:  Linux make all
       if: contains(matrix.config.os, 'ubuntu')
       run: make all
+    - name: install show-tree
+      if: contains(matrix.config.os,'windows')
+      run: ECHO A | Install-Script -Name Show-Tree 
     - name: check files
       if: contains(matrix.config.os,'windows')
-      run: tree "${{ github.workspace }}\vcpkg\installed\x64-windows-release\lib\pkgconfig"
+      run: Show-Tree "${{ github.workspace }}\vcpkg\installed\x64-windows-release\lib\pkgconfig" -depth 10
     - name:  Windows make all
       if: contains(matrix.config.os,'windows')
       run: make LDFLAGS="-L${{ github.workspace }}\vcpkg\installed\x64-windows-release\lib\pkgconfig -Wl,-rpath,${{ github.workspace }}\vcpkg\installed\x64-windows-release\lib\pkgconfig" all
