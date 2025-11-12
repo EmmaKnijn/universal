@@ -22,11 +22,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Win MSVC 64 dev cmd setup
+    - name: Windows Setup Dependency
       if: contains(matrix.config.os, 'windows')
       uses: johnwason/vcpkg-action@v7
       with:
         pkgs: czmq
+        token: ${{ github.token }}
     - name: Linux Setup Dependency
       if: contains(matrix.config.os, 'ubuntu')
       run: sudo apt-get install libczmq-dev
