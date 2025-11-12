@@ -31,12 +31,13 @@ jobs:
     - name:  Linux make all
       if: contains(matrix.config.os, 'ubuntu')
       run: make all
-    - name:  Windows make all
-      if: contains(matrix.config.os,'windows')
-      run: make LDFLAGS="-L${{ github.workspace }}\vcpkg\installed\x64-windows-release -Wl,-rpath,${{ github.workspace }}\vcpkg\installed\x64-windows-release" all
     - name: check files
       if: contains(matrix.config.os,'windows')
       run: tree {{ github.workspace }}\vcpkg\installed\x64-windows-release
+    - name:  Windows make all
+      if: contains(matrix.config.os,'windows')
+      run: make LDFLAGS="-L${{ github.workspace }}\vcpkg\installed\x64-windows-release -Wl,-rpath,${{ github.workspace }}\vcpkg\installed\x64-windows-release" all
+   
     - uses: actions/upload-artifact@v4
       with:
         name: universal-builds-linux
