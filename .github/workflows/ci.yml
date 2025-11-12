@@ -7,11 +7,28 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build-linux:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - os: ubuntu-latest
+            cibw: "cp310*"
+            cibw_skip: "*musllinux*"
+          - os: windows-2022
+            cibw: "cp310*"
+            cibw_skip: "*-win32"
     steps:
     - uses: actions/checkout@v4
-    - name: set up zmq
+    
+    - name: Win MSVC 64 dev cmd setup
+      if: contains(matrix.config.os, 'windows')
+      uses: johnwason/vcpkg-action@v7
+      with:
+        pkgs: czmq
+    - name: Linux Setup Dependency
+      if: contains(matrix.config.os, 'ubuntu')
       run: sudo apt-get install libczmq-dev
     - name: make all
       run: make all
