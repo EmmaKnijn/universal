@@ -28,12 +28,12 @@ jobs:
     - name: Linux Setup Dependency
       if: contains(matrix.config.os, 'ubuntu')
       run: sudo apt-get install libczmq-dev
-    - name: Linux make all
+    - name:  Linux make all
       if: contains(matrix.config.os, 'ubuntu')
       run: make all
-    - name: Windows make all
-      if: contains(matrix.config.os, 'windows')
-      run: make all-windows
+    - name:  Windows make all
+      if: contains(matrix.config.os,'windows')
+      run: make LDFLAGS="-L${{ github.workspace }}\vcpkg\installed\x64-windows-release -Wl,-rpath,${{ github.workspace }}\vcpkg\installed\x64-windows-release" all
     - uses: actions/upload-artifact@v4
       with:
         name: universal-builds-linux
