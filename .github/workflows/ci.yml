@@ -22,7 +22,7 @@ jobs:
       if: contains(matrix.config.os, 'windows')
       uses: johnwason/vcpkg-action@v7
       with:
-        pkgs: czmq
+        pkgs: zeromq
         triplet: x64-windows-release
         token: ${{ github.token }}
     - name: Linux Setup Dependency
