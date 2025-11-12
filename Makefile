@@ -5,9 +5,6 @@ LDFLAGS=-L$(PREFIX)/lib -Wl,-rpath,$(PREFIX)/lib -lzmq
 
 all: zmq2 zmq3
 
-all-windows: 
-	LDFLAGS=-L$D:/a/universal/universal/vcpkg/installed/x64-windows-release/ -Wl,-rpath,D:/a/universal/universal/vcpkg/installed/x64-windows-release/ -lzmq
-	zmq2 zmq3
 zmq2: universal-pubsub universal-sub-pubsub universal-sub-push
 
 zmq3: universal-sub-xpubxsub universal-sub-xpubxsub-timeout universal-xpubxsub
