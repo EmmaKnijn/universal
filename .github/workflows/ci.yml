@@ -14,11 +14,7 @@ jobs:
       matrix:
         config:
           - os: ubuntu-latest
-            cibw: "cp310*"
-            cibw_skip: "*musllinux*"
           - os: windows-2022
-            cibw: "cp310*"
-            cibw_skip: "*-win32"
     steps:
     - uses: actions/checkout@v4
     
@@ -27,6 +23,7 @@ jobs:
       uses: johnwason/vcpkg-action@v7
       with:
         pkgs: czmq
+        triplet: x64-windows-release
         token: ${{ github.token }}
     - name: Linux Setup Dependency
       if: contains(matrix.config.os, 'ubuntu')
