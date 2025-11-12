@@ -13,5 +13,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: set up zmq
+      run: apt-get install libczmq-dev
     - name: make all
-      run: make
+      run: make all
