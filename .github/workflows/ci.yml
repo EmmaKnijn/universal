@@ -33,10 +33,10 @@ jobs:
       run: make all
     - name: check files
       if: contains(matrix.config.os,'windows')
-      run: tree "${{ github.workspace }}\vcpkg\installed\x64-windows-release\share\zeromq"
+      run: tree "${{ github.workspace }}\vcpkg\installed\x64-windows-release\lib\pkgconfig"
     - name:  Windows make all
       if: contains(matrix.config.os,'windows')
-      run: make LDFLAGS="-L${{ github.workspace }}\vcpkg\installed\x64-windows-release\share\zeromq -Wl,-rpath,${{ github.workspace }}\vcpkg\installed\x64-windows-release\share\zeromq" all
+      run: make LDFLAGS="-L${{ github.workspace }}\vcpkg\installed\x64-windows-release\lib\pkgconfig -Wl,-rpath,${{ github.workspace }}\vcpkg\installed\x64-windows-release\lib\pkgconfig" all
    
     - uses: actions/upload-artifact@v4
       with:
