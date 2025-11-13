@@ -31,10 +31,13 @@ jobs:
     - name:  Linux make all
       if: contains(matrix.config.os, 'ubuntu')
       run: make all
-    - name: install show-tree
+    - name: Install NuGet
       if: contains(matrix.config.os,'windows')
-      run: ECHO A | Install-Script -Name Show-Tree 
-    - name: check files
+      run: Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Confirm:$false
+    - name: Install Show-Tree
+      if: contains(matrix.config.os,'windows')
+      run: Install-Module -Name Pscx -AllowClobber -Force -Confirm:$false
+    - name: List files
       if: contains(matrix.config.os,'windows')
       run: Show-Tree "${{ github.workspace }}\vcpkg\installed\x64-windows-release\lib\pkgconfig" -depth 10
     - name:  Windows make all
